@@ -92,4 +92,40 @@ function delete_klient($connection, $id_klienta)
     return mysqli_stmt_get_result($statement);
 }
 
+function update_klient($connection, $id_klienta, $imie, $nazwisko, $telefon)
+{
+
+    $sql = "SELECT update_klient(?,?,?,?) as update_klient_info";
+    $statement = mysqli_stmt_init($connection);
+
+    if (!mysqli_stmt_prepare($statement, $sql)) {
+        header("location: ../login.php?error=stmtfailed");
+        exit();
+      }
+
+    mysqli_stmt_bind_param($statement, 'isss', $id_klienta, $imie, $nazwisko, $telefon);
+    mysqli_stmt_execute($statement);
+
+
+    return mysqli_stmt_get_result($statement);
+}
+
+function update_mieszkanie($connection, $id_mieszkania, $id_posrednika, $cena, $imie_wlasciciela, $nazwisko_wlasciciela, $telefon_wlasciciela, $miasto, $ulica, $kod_pocztowy, $powierzchnia, $rodzaj_mieszkania, $opis_mieszkania, $sprzedano)
+{
+
+    $sql = "SELECT update_mieszkanie(?,?,?,?,?,?,?,?,?,?,?,?,?) as update_mieszkanie_info";
+    $statement = mysqli_stmt_init($connection);
+
+    if (!mysqli_stmt_prepare($statement, $sql)) {
+        header("location: ../login.php?error=stmtfailed");
+        exit();
+      }
+
+    mysqli_stmt_bind_param($statement, 'iiissssssisss', $id_mieszkania, $id_posrednika, $cena, $imie_wlasciciela, $nazwisko_wlasciciela, $telefon_wlasciciela, $miasto, $ulica, $kod_pocztowy, $powierzchnia, $rodzaj_mieszkania, $opis_mieszkania, $sprzedano);
+    mysqli_stmt_execute($statement);
+
+
+    return mysqli_stmt_get_result($statement);
+}
+
 ?>

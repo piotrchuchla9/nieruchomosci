@@ -160,7 +160,8 @@ CREATE OR REPLACE PROCEDURE add_mieszkanie(
     IN   _kod_pocztowy varchar(20),
     IN   _powierzchnia integer,
     IN   _rodzaj_mieszkania varchar(40),
-    IN   _opis_mieszkania varchar(3000)
+    IN   _opis_mieszkania varchar(3000),
+    IN   _sprzedano varchar(10)
 
 )
 BEGIN
@@ -176,7 +177,8 @@ BEGIN
         kod_pocztowy,
         powierzchnia,
         rodzaj_mieszkania,
-        opis_mieszkania
+        opis_mieszkania,
+        sprzedano
     )
         VALUES (
         _id_posrednika,
@@ -189,7 +191,8 @@ BEGIN
         _kod_pocztowy,
         _powierzchnia,
         _rodzaj_mieszkania,
-        _opis_mieszkania
+        _opis_mieszkania,
+        _sprzedano
    );
 
 END $$
@@ -219,7 +222,33 @@ BEGIN
 END $$
 DELIMITER ;
 
+------------------------------------------------
+
+DELIMITER $$
+CREATE OR REPLACE FUNCTION update_klient(
+    _id_klienta integer,
+      _imie varchar(50),
+      _nazwisko varchar(100),
+      _telefon varchar(15)
+)RETURNS integer 
+BEGIN
+	DECLARE result integer;
+    set result = 0;
+    
+    UPDATE klient
+    SET imie = _imie,
+    nazwisko = _nazwisko,
+    telefon = _telefon
+    WHERE id_klienta = _id_klienta;
+
+    RETURN 0;
+
+END $$
+DELIMITER ;
+
 ---------------------------------------------------------
+
+
 
 DELIMITER $$
 
@@ -253,28 +282,98 @@ BEGIN
 END $$
 DELIMITER ;
 
+------------------------------------------------
+
+DELIMITER $$
+CREATE OR REPLACE FUNCTION delete_mieszkanie(
+      _id_mieszkania integer
+)RETURNS integer 
+BEGIN
+	DECLARE result integer;
+    set result = 0;
+    
+
+	    SELECT COUNT(*) INTO result FROM transakcja WHERE id_klienta = _id_klienta;
+        IF result = 0 THEN
+            DELETE FROM klient WHERE id_klienta = _id_klienta;
+            RETURN 0;
+        ELSE 
+            RETURN 1;
+        END IF;
+   
+
+END $$
+DELIMITER ;
+
 ---------------------------------------------------------
 
 
 DELIMITER $$
-CREATE OR REPLACE PROCEDURE update_ubezpieczenie (
-
-    _ubezp_id INTEGER,
-    _pojazd_id integer,
-    _nazwa_firmy_ubezp VARCHAR(20),
-    _typ_ubezp varchar(40),
-    _cena_ubezp decimal(10,4),
-    _data_start_ubezp timestamp
-
-)
+CREATE OR REPLACE FUNCTION update_mieszkanie(
+    _id_mieszkania integer,
+      _id_posrednika integer,
+      _cena integer,
+      _imie_wlasciciela VARCHAR(50),
+      _nazwisko_wlasciciela VARCHAR(50),
+      _telefon_wlasciciela VARCHAR(15),
+      _miasto VARCHAR(100),
+      _ulica VARCHAR(250),
+      _kod_pocztowy VARCHAR(20),
+      _powierzchnia integer,
+      _rodzaj_mieszkania VARCHAR(40),
+      _opis_mieszkania VARCHAR(3000),
+      _sprzedano VARCHAR(10)
+)RETURNS integer 
 BEGIN
-	UPDATE ubezpieczenia
-	    SET ubezp_id = _ubezp_id,
-       	  nazwa_firmy_ubezp = _nazwa_firmy_ubezp,
-          typ_ubezp = _typ_ubezp,
-          cena_ubezp = _cena_ubezp,
-		      data_start_ubezp = _data_start_ubezp,
-          data_koncowa_ubezp = adddate(_data_start_ubezp, interval 1 year)
-    WHERE pojazd_id = _pojazd_id;
+	DECLARE result integer;
+    set result = 0;
+    
+    UPDATE mieszkanie
+    SET id_posrednika = _id_posrednika,
+    cena = _cena,
+    imie_wlasciciela = _imie_wlasciciela,
+    nazwisko_wlasciciela = _nazwisko_wlasciciela,
+    telefon_wlasciciela = _telefon_wlasciciela,
+    miasto = _miasto,
+    ulica = _ulica,
+    kod_pocztowy = _kod_pocztowy,
+    powierzchnia = _powierzchnia,
+    rodzaj_mieszkania = _rodzaj_mieszkania,
+    opis_mieszkania = _opis_mieszkania,
+    sprzedano = _sprzedano
+    WHERE id_mieszkania = _id_mieszkania;
 
-END$$
+    RETURN 0;
+
+END $$
+DELIMITER ;
+
+-------------------------------------------------------
+
+DELIMITER $$
+CREATE OR REPLACE FUNCTION update_transakcja(
+    _id_transakcji integer,
+      _cena integer,
+      _data_transakcji date,
+      _id_posrednika integer,     
+      _id_klienta integer,
+      _id_mieszkania integer,
+      _dokonanie_transakcji tinyint
+)RETURNS integer 
+BEGIN
+	DECLARE result integer;
+    set result = 0;
+    
+    UPDATE transakcja
+    SET id_posrednika = _id_posrednika,
+    cena = _cena,
+    imie_wlasciciela = _imie_wlasciciela,
+    nazwisko_wlasciciela = _nazwisko_wlasciciela,
+    telefon_wlasciciela = _telefon_wlasciciela,
+    miasto = _miasto;
+    RETURN 0;
+
+END $$
+DELIMITER ;
+
+-------------------------------------------------------

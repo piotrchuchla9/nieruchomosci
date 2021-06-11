@@ -39,9 +39,11 @@ include_once "../procedury/ladowanieFunkcji.php";
                 </tr>
                 <tr>
                     <th style="float: left">Pośrednik&nbsp;</th>
-                    <th><select name="posrednik" id="posrednik">
+                    <th><select name="posrednik" id="posrednik" required>
 
                     <?php
+                    //error_reporting(0);
+
                     echo '<option value=""></option>';
                     $sql = "SELECT id_posrednika, imie, nazwisko FROM posrednik";
                     $result = $connection -> query($sql);
@@ -54,7 +56,7 @@ include_once "../procedury/ladowanieFunkcji.php";
                 </select></tr>
                 <tr>
                     <th style="float: left">Klient&nbsp;</th>
-                    <th><select name="klient" id="klient">
+                    <th><select name="klient" id="klient" required>
 
                     <?php
                     echo '<option value=""></option>';
@@ -69,14 +71,14 @@ include_once "../procedury/ladowanieFunkcji.php";
                 </select></tr>
                 <tr>
                     <th style="float: left">Mieszkanie&nbsp;</th>
-                    <th><select name="mieszkanie" id="mieszkanie">
+                    <th><select name="mieszkanie" id="mieszkanie" required>
 
                     <?php
                     echo '<option value=""></option>';
-                    $sql = "SELECT id_mieszkania, miasto, ulica FROM mieszkanie";
+                    $sql = "SELECT id_mieszkania, miasto, ulica, cena FROM mieszkanie WHERE sprzedano = 'nie'";
                     $result = $connection -> query($sql);
                     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                        echo '<option value="' .$row["id_mieszkania"]. '">'.$row["miasto"].' '.$row["ulica"].'</option>';
+                        echo '<option value="' .$row["id_mieszkania"]. '">'.$row["miasto"].' '.$row["ulica"].' '.$row["cena"].'zł</option>';
                     }
 
 
@@ -88,9 +90,11 @@ include_once "../procedury/ladowanieFunkcji.php";
                 </tr>
             </table>
 
-            <button type="submit" name="dodaj_transakcje" style="margin-left: 50px;">Wyślij</button>
+            <button type="submit" name="dodaj_transakcje" style="margin-left: 50px;" onclick="alert('Dokonano Transakcji!'); window.location.reload();">Wyślij</button>
 
         </form>
+
+        <a href="listaTransakcji.php">Transakcje</a>
     </div>
 
     <?php

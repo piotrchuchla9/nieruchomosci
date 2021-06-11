@@ -14,72 +14,86 @@ include_once "../procedury/ladowanieFunkcji.php";
     <link rel="stylesheet" href="../style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" >
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" ></script>
-    <title>Dodaj Pośrednika</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Dodaj Klienta</title>
 </head>
 
 <body>
     <div class="topnav">
         <a href="../index.php">Home</a>
-        <a href="dodajKlienta.php">Dodaj Klienta</a>
+        <a href="dodajPosrednika.php">Dodaj Pośrednika</a>
         <a href="dodajMieszkanie.php">Dodaj Mieszkanie</a>
         <a href="dodajTransakcje.php">Dodaj Transakcje</a>
     </div>
     <div class="wrapper">
-        <form action="listaKlientow.php" method="post">
+    <?php
+                if ($_SERVER['REQUEST_METHOD'] === 'GET')  : ?>
+        
+        <form action="edycjaKlienta.php" method="post">
             <table>
-                <tr>
-                    <th style="float: left">Klient&nbsp;</th>
-                    <th><select name="klient" id="klient">
-
-                    <?php
-                    echo '<option value=""></option>';
-                    $sql = "SELECT id_klienta, imie, nazwisko FROM klient";
-                    $result = $connection -> query($sql);
+                <?php
+                    $sql = "SELECT * FROM klient WHERE id_klienta = " .$_GET["id"];
+                    $result = $connection->query($sql);
                     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                        echo '<option value="' .$row["id_klienta"]. '">'.$row["imie"].' '.$row["nazwisko"].'</option>';
+                        echo '
+                    <input name="id" id="id" type="hidden" value="'.$row["id_klienta"].'">
+                    <tr>
+                        <th style="float: left">Imię Klienta&nbsp;</th>
+                        <th><input type="text" name="imie" placeholder="imie" pattern="[A-Za-z]+" value="'.$row["imie"].'" required></th>
+                    </tr>
+                    <tr>
+                        <th style="float: left">Nazwisko Klienta&nbsp;</th>
+                        <th><input type="text" name="nazwisko" placeholder="nazwisko" pattern="[A-Za-z]+" value="'.$row["nazwisko"].'" required></th>
+                    </tr>
+                    <tr>
+                        <th style="float: left">Telefon Klienta&nbsp;</th>
+                        <th><input type="text" name="telefon" placeholder="telefon" pattern="\d*" value="'.$row["telefon"].'" required></th>
+                    </tr>
+                        ';
                     }
-
-
-                    ?>
-
-                </tr>
-
                 
-            </table>
-            
-            <button type="button" name="edytuj_klienta" onclick="location.href = 'edycjaKlienta.php?id=' + document.getElementById('klient').value;" >Wyślij</button>
-            
-        </form>
 
-        <!-- <button style="margin-top: 100px;"><a href="usunPosrednika.php"></a>Usuń Pośrednika</button> -->
+
+                ?>
+                
+
+            </table>
+
+            <button type="submit" name="edytuj_klienta">Wyślij</button>
+
+        </form>
+        <?php endif; ?>
+
     </div>
 
     <?php
-    if (isset($_POST['usun_klienta'])) {
-        $id_klienta = $_POST['klient'];
+    if (isset($_POST['edytuj_klienta'])) {
+        $id_klienta = $_POST['id'];
+        $imie = $_POST['imie'];
+        $nazwisko = $_POST['nazwisko'];
+        $telefon = $_POST['telefon'];
 
-        $result = delete_klient($connection, $id_klienta);
+        $result = update_klient($connection, $id_klienta, $imie, $nazwisko, $telefon);
 
         if (!empty($result) && $result->num_rows > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                $delete_klient_info = $row['delete_klient_info'];
+                $update_klient_info = $row['update_klient_info'];
 
-                if ($delete_klient_info == 0) {
+                if ($update_klient_info == 0) {
 
                     echo '<div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
                     echo '<div class="modal-dialog">';
                     echo '<div class="modal-content">';
                     echo '<div class="modal-header">';
                     echo '<h5 class="modal-title" id="exampleModalLabel">Sukces</h5>';
-                    echo '<button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.href = \'usunKlienta.php\'" aria-label="Close"></button>';
+                    echo '<button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.href = \'dodajKlienta.php\'" aria-label="Close"></button>';
                     echo '</div>';
                     echo '<div class="modal-body">';
-                    echo 'Usunięto klienta!';
+                    echo 'Zedytowano Klienta!';
                     echo '</div>';
                     echo '<div class="modal-footer">';
-                    echo '<button type="button" class="btn btn-secondary" onclick="location.href = \'usunKlienta.php\'" data-bs-dismiss="modal">Zamknij</button>';
+                    echo '<button type="button" class="btn btn-secondary" onclick="location.href = \'dodajKlienta.php\'" data-bs-dismiss="modal">Zamknij</button>';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
@@ -97,13 +111,13 @@ include_once "../procedury/ladowanieFunkcji.php";
                     echo '<div class="modal-content">';
                     echo '<div class="modal-header">';
                     echo '<h5 class="modal-title" id="exampleModalLabel">Błąd!</h5>';
-                    echo '<button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.href = \'usunKlienta.php\'" aria-label="Close"></button>';
+                    echo '<button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.href = \'dodajKlienta.php\'" aria-label="Close"></button>';
                     echo '</div>';
                     echo '<div class="modal-body">';
-                    echo 'Dany klient jest obecny w innych tabelach!';
+                    echo 'Popraw dane!';
                     echo '</div>';
                     echo '<div class="modal-footer">';
-                    echo '<button type="button" class="btn btn-secondary" onclick="location.href = \'usunKlienta.php\'" data-bs-dismiss="modal">Close</button>';
+                    echo '<button type="button" class="btn btn-secondary" onclick="location.href = \'dodajKlienta.php\'" data-bs-dismiss="modal">Close</button>';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';

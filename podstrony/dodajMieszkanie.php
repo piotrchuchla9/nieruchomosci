@@ -31,7 +31,7 @@ include_once "../procedury/ladowanieFunkcji.php";
             <table>
                 <tr>
                     <th style="float: left">Pośrednik&nbsp;</th>
-                    <th><select name="posrednik" id="posrednik">
+                    <th><select name="posrednik" id="posrednik" required>
 
                     <?php
                     echo '<option value=""></option>';
@@ -87,6 +87,7 @@ include_once "../procedury/ladowanieFunkcji.php";
                     <th style="float: left">Opis Mieszkania&nbsp;</th>
                     <th><input type="text" name="opis" placeholder="Opis Mieszkania" required></th>
                 </tr>
+                <input type="hidden" name="sprzedano" value="nie">
 
 
 
@@ -96,6 +97,8 @@ include_once "../procedury/ladowanieFunkcji.php";
             <button type="submit" name="dodaj_mieszkanie" style="margin-left: 50px;">Wyślij</button>
 
         </form>
+
+        <a href="listaMieszkan.php">Mieszkania</a>
     </div>
 
     <?php
@@ -111,11 +114,12 @@ include_once "../procedury/ladowanieFunkcji.php";
         $powierzchnia = $_POST['powierzchnia'];
         $typ = $_POST['typ'];
         $opis = $_POST['opis'];
+        $sprzedano = $_POST['sprzedano'];
 
 
 
 
-        $result = add_mieszkanie($connection, $posrednik, $cena, $imie_wlasciciela, $nazwisko_wlasciciela, $telefon_wlasciciela, $miasto, $ulica, $kod_pocztowy, $powierzchnia, $typ, $opis);
+        $result = add_mieszkanie($connection, $posrednik, $cena, $imie_wlasciciela, $nazwisko_wlasciciela, $telefon_wlasciciela, $miasto, $ulica, $kod_pocztowy, $powierzchnia, $typ, $opis, $sprzedano);
 
         if (!empty($result) && $result->num_rows > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
