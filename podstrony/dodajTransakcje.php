@@ -94,7 +94,7 @@ include_once "../procedury/ladowanieFunkcji.php";
 
         </form>
 
-        <a href="listaTransakcji.php">Transakcje</a>
+        <button style="margin-top: 40px;" onclick="location.href='listaTransakcji.php'">Lista Transakcji</button>
     </div>
 
     <?php

@@ -98,7 +98,7 @@ include_once "../procedury/ladowanieFunkcji.php";
 
         </form>
 
-        <a href="listaMieszkan.php">Mieszkania</a>
+        <button style="margin-top: 40px;" onclick="location.href='listMieszkan.php'">Lista Mieszkań</button>
     </div>
 
     <?php

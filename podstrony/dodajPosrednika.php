@@ -47,8 +47,8 @@ include_once "../procedury/ladowanieFunkcji.php";
             
         </form>
 
-        <a href="usunPosrednika.php">Usuń Pośrednika</a>
-        <a href="listaPosrednikow.php">Pośrednicy</a>
+        <button style="margin-top: 40px;" onclick="location.href='usunPosrednika.php'">Usuń Pośrednika</button>
+        <button onclick="location.href='listaPosrednikow.php'">Lista Pośredników</button>
     </div>
 
     <?php

@@ -365,12 +365,13 @@ BEGIN
     set result = 0;
     
     UPDATE transakcja
-    SET id_posrednika = _id_posrednika,
-    cena = _cena,
-    imie_wlasciciela = _imie_wlasciciela,
-    nazwisko_wlasciciela = _nazwisko_wlasciciela,
-    telefon_wlasciciela = _telefon_wlasciciela,
-    miasto = _miasto;
+    SET cena = _cena,
+    data_transakcji = _data_transakcji,
+    id_posrednika = _id_posrednika,
+    id_klienta = _id_klienta,
+    id_mieszkania = _id_mieszkania,
+    dokonanie_transakcji = _dokonanie_transakcji
+    WHERE id_transakcji = _id_transakcji;
     RETURN 0;
 
 END $$

@@ -128,4 +128,27 @@ function update_mieszkanie($connection, $id_mieszkania, $id_posrednika, $cena, $
     return mysqli_stmt_get_result($statement);
 }
 
+
+function update_transakcja($connection, $id_transakcji, $cena, $data_transakcji, $id_posrednika, $id_klienta, $id_mieszkania, $dokonanie_transakcji)
+{
+
+    $sql = "SELECT update_transakcja(?,?,?,?,?,?,?) as update_transakcja_info";
+    $statement = mysqli_stmt_init($connection);
+
+    if (!mysqli_stmt_prepare($statement, $sql)) {
+        header("location: ../login.php?error=stmtfailed");
+        exit();
+      }
+
+    mysqli_stmt_bind_param($statement, 'idsiiii', $id_transakcji, $cena, $data_transakcji, $id_posrednika, $id_klienta, $id_mieszkania, $dokonanie_transakcji);
+    mysqli_stmt_execute($statement);
+
+
+    return mysqli_stmt_get_result($statement);
+}
+
 ?>
+
+
+?>
+

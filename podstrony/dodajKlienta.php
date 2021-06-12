@@ -47,8 +47,9 @@ include_once "../procedury/ladowanieFunkcji.php";
 
         </form>
 
-        <a href="usunKlienta.php">Usuń Klienta</a>
-        <a href="listaKlientow.php">Klienci</a>
+
+        <button style="margin-top: 40px;" onclick="location.href='usunKlienta.php'">Usuń Klienta</button>
+        <button onclick="location.href='listaKlientow.php'">Lista Klientów</button>
     </div>
 
     <?php
