@@ -20,10 +20,10 @@
         <p class="welcome">Agencja Nieruchomości</p>
         <p class="description">Zarządzaj Nieruchomościami</p>
         <div class="nav">
-            <a href="podstrony/dodajKlienta.php">Dodaj Klienta</a>
-            <a href="podstrony/dodajPosrednika.php">Dodaj Pośrednika</a>
-            <a href="podstrony/dodajMieszkanie.php">Dodaj Mieszkanie</a>
-            <a href="podstrony/dodajTransakcje.php">Dodaj Transakcje</a>
+            <a href="podstrony/dodajKlienta.php">Klienci</a>
+            <a href="podstrony/dodajPosrednika.php">Pośrednicy</a>
+            <a href="podstrony/dodajMieszkanie.php">Mieszkania</a>
+            <a href="podstrony/dodajTransakcje.php">Transakcje</a>
         </div>
     </div>
 

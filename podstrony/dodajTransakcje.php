@@ -22,9 +22,9 @@ include_once "../procedury/ladowanieFunkcji.php";
 <body>
     <div class="topnav">
         <a href="../index.php">Home</a>
-        <a href="dodajKlienta.php">Dodaj Klienta</a>
-        <a href="dodajPosrednika.php">Dodaj Pośrednika</a>
-        <a href="dodajMieszkanie.php">Dodaj Mieszkanie</a>
+        <a href="dodajKlienta.php">Klienci</a>
+        <a href="dodajPosrednika.php">Pośrednicy</a>
+        <a href="dodajMieszkanie.php">Mieszkanie</a>
     </div>
     <div class="wrapper">
         <form action="dodajTransakcje.php" method="post">
@@ -94,7 +94,7 @@ include_once "../procedury/ladowanieFunkcji.php";
 
         </form>
 
-        <button style="margin-top: 40px;" onclick="location.href='listaTransakcji.php'">Lista Transakcji</button>
+        <button style="margin-top: 40px;" onclick="location.href='listaTransakcji.php'">Edycja Transakcji</button>
     </div>
 
     <?php

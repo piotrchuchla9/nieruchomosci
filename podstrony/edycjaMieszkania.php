@@ -22,9 +22,9 @@ include_once "../procedury/ladowanieFunkcji.php";
 <body>
     <div class="topnav">
         <a href="../index.php">Home</a>
-        <a href="dodajKlienta.php">Dodaj Klienta</a>
-        <a href="dodajPosrednika.php">Dodaj Pośrednika</a>
-        <a href="dodajTransakcje.php">Dodaj Transakcje</a>
+        <a href="dodajKlienta.php">Klienci</a>
+        <a href="dodajPosrednika.php">Pośrednicy</a>
+        <a href="dodajTransakcje.php">Transakcje</a>
     </div>
     <div class="wrapper">
     <?php

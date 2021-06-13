@@ -22,9 +22,9 @@ include_once "../procedury/ladowanieFunkcji.php";
 <body>
     <div class="topnav">
         <a href="../index.php">Home</a>
-        <a href="dodajKlienta.php">Dodaj Klienta</a>
-        <a href="dodajPosrednika.php">Dodaj Pośrednika</a>
-        <a href="dodajMieszkanie.php">Dodaj Mieszkanie</a>
+        <a href="dodajKlienta.php">Klienci</a>
+        <a href="dodajPosrednika.php">Pośrednicy</a>
+        <a href="dodajMieszkanie.php">Mieszkanie</a>
     </div>
     <div class="wrapper">
     <?php
@@ -58,10 +58,10 @@ include_once "../procedury/ladowanieFunkcji.php";
 
                     <?php
                     echo '<option value=""></option>';
-                    $sql = "SELECT id_posrednika, imie, nazwisko FROM posrednik";
+                    $sql = "SELECT id_posrednika, imie, nazwisko, telefon FROM posrednik";
                     $result = $connection -> query($sql);
                     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                        echo '<option value=' .$row["id_posrednika"]. '>'.$row["imie"].' '.$row["nazwisko"].'</option>';
+                        echo '<option value=' .$row["id_posrednika"]. '>'.$row["imie"].' '.$row["nazwisko"].' '.$row["telefon"].'</option>';
                     }
 
 
@@ -75,10 +75,10 @@ include_once "../procedury/ladowanieFunkcji.php";
 
                     <?php
                     echo '<option value=""></option>';
-                    $sql = "SELECT id_klienta, imie, nazwisko FROM klient";
+                    $sql = "SELECT id_klienta, imie, nazwisko, telefon FROM klient";
                     $result = $connection -> query($sql);
                     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                        echo '<option value=' .$row["id_klienta"]. '>'.$row["imie"].' '.$row["nazwisko"].'</option>';
+                        echo '<option value=' .$row["id_klienta"]. '>'.$row["imie"].' '.$row["nazwisko"].' '.$row["telefon"].'</option>';
                     }
 
 

@@ -22,9 +22,9 @@ include_once "../procedury/ladowanieFunkcji.php";
 <body>
     <div class="topnav">
         <a href="../index.php">Home</a>
-        <a href="dodajKlienta.php">Dodaj Klienta</a>
-        <a href="dodajMieszkanie.php">Dodaj Mieszkanie</a>
-        <a href="dodajTransakcje.php">Dodaj Transakcje</a>
+        <a href="dodajKlienta.php">Klienci</a>
+        <a href="dodajMieszkanie.php">Mieszkania</a>
+        <a href="dodajTransakcje.php">Transakcje</a>
     </div>
     <div class="wrapper">
         <form action="listaPosrednikow.php" method="post">
@@ -35,10 +35,10 @@ include_once "../procedury/ladowanieFunkcji.php";
 
                     <?php
                     echo '<option value=""></option>';
-                    $sql = "SELECT id_posrednika, imie, nazwisko FROM posrednik";
+                    $sql = "SELECT id_posrednika, imie, nazwisko, telefon FROM posrednik";
                     $result = $connection -> query($sql);
                     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                        echo '<option value="' .$row["id_posrednika"]. '">'.$row["imie"].' '.$row["nazwisko"].'</option>';
+                        echo '<option value="' .$row["id_posrednika"]. '">'.$row["imie"].' '.$row["nazwisko"].' '.$row["telefon"].'</option>';
                     }
 
 
@@ -56,69 +56,7 @@ include_once "../procedury/ladowanieFunkcji.php";
         <!-- <button style="margin-top: 100px;"><a href="usunPosrednika.php"></a>Usuń Pośrednika</button> -->
     </div>
 
-    <?php
-    if (isset($_POST['usun_posrednika'])) {
-        $id_posrednika = $_POST['posrednik'];
-
-        $result = delete_posrednik($connection, $id_posrednika);
-
-        if (!empty($result) && $result->num_rows > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $delete_posrednik_info = $row['delete_posrednik_info'];
-
-                if ($delete_posrednik_info == 0) {
-
-                    echo '<div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-                    echo '<div class="modal-dialog">';
-                    echo '<div class="modal-content">';
-                    echo '<div class="modal-header">';
-                    echo '<h5 class="modal-title" id="exampleModalLabel">Sukces</h5>';
-                    echo '<button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.href = \'usunPosrednika.php\'" aria-label="Close"></button>';
-                    echo '</div>';
-                    echo '<div class="modal-body">';
-                    echo 'Usunięto pośrednika!';
-                    echo '</div>';
-                    echo '<div class="modal-footer">';
-                    echo '<button type="button" class="btn btn-secondary" onclick="location.href = \'usunPosrednika.php\'" data-bs-dismiss="modal">Zamknij</button>';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</div>';
-
-                    echo "<script type='text/javascript'>
-                        $(document).ready(function(){
-                        $('#warningModal').modal('show');
-                        });
-                        </script>";
-                } else {
-
-                    echo '<div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-                    echo '<div class="modal-dialog">';
-                    echo '<div class="modal-content">';
-                    echo '<div class="modal-header">';
-                    echo '<h5 class="modal-title" id="exampleModalLabel">Błąd!</h5>';
-                    echo '<button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.href = \'usunPosrednika.php\'" aria-label="Close"></button>';
-                    echo '</div>';
-                    echo '<div class="modal-body">';
-                    echo 'Dany pośrednik jest obecny w innych tabelach!';
-                    echo '</div>';
-                    echo '<div class="modal-footer">';
-                    echo '<button type="button" class="btn btn-secondary" onclick="location.href = \'usunPosrednika.php\'" data-bs-dismiss="modal">Close</button>';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</div>';
-
-                    echo "<script type='text/javascript'>
-                        $(document).ready(function(){
-                        $('#warningModal').modal('show'); });
-                        </script>";
-                }
-            }
-        }
-    }
-
-    ?>
+    
 
 </body>
 

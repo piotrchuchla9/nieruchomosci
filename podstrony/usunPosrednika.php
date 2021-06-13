@@ -22,9 +22,10 @@ include_once "../procedury/ladowanieFunkcji.php";
 <body>
     <div class="topnav">
         <a href="../index.php">Home</a>
-        <a href="dodajKlienta.php">Dodaj Klienta</a>
-        <a href="dodajMieszkanie.php">Dodaj Mieszkanie</a>
-        <a href="dodajTransakcje.php">Dodaj Transakcje</a>
+        <a href="dodajKlienta.php">Klienci</a>
+        <a href="dodajPosrednika.php">Pośrednicy</a>
+        <a href="dodajMieszkanie.php">Mieszkania</a>
+        <a href="dodajTransakcje.php">Transakcje</a>
     </div>
     <div class="wrapper">
         <form action="usunPosrednika.php" method="post">
@@ -35,10 +36,10 @@ include_once "../procedury/ladowanieFunkcji.php";
 
                     <?php
                     echo '<option value=""></option>';
-                    $sql = "SELECT id_posrednika, imie, nazwisko FROM posrednik";
+                    $sql = "SELECT id_posrednika, imie, nazwisko, telefon FROM posrednik";
                     $result = $connection -> query($sql);
                     while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                        echo '<option value="' .$row["id_posrednika"]. '">'.$row["imie"].' '.$row["nazwisko"].'</option>';
+                        echo '<option value="' .$row["id_posrednika"]. '">'.$row["imie"].' '.$row["nazwisko"].' '.$row["telefon"].'</option>';
                     }
 
 
